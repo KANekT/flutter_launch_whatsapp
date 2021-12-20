@@ -18,12 +18,10 @@ class FlutterLaunch {
   }
 
   static Future<void> launchTelegram({
-    required String phone,
-    required String message,
+    required String domain
   }) async {
     final Map<String, dynamic> params = <String, dynamic>{
-      'phone': phone,
-      'message': message
+      'domain': domain
     };
     await _channel.invokeMethod('launchTelegram', params);
   }
