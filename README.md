@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void telegramAppOpen() async {
-    await FlutterLaunch.launchTelegram(phone: "5534992016545", message: "Hello");
+    await FlutterLaunch.launchTelegram(domain: "5534992016545");
   }
 
   @override

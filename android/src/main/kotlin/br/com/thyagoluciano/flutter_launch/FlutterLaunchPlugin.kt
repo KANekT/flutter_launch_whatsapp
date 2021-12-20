@@ -59,10 +59,9 @@ class FlutterLaunchPlugin: FlutterPlugin, MethodCallHandler {
 
       if (call.method == "launchTelegram") {
 
-        val phone: String? = call.argument("phone")
-        val message: String? = call.argument("message")
+        val domain: String? = call.argument("domain")
 
-        val url: String = "tg://msg?text=${URLEncoder.encode(message, "UTF-8")}&to=$phone"
+        val url: String = "tg://resolve?domain=$domain"
 
         if (appInstalledOrNot("org.telegram.messenger")) {
           val intent: Intent = Intent(Intent.ACTION_VIEW)

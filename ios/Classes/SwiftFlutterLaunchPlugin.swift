@@ -27,10 +27,9 @@ public class SwiftFlutterLaunchPlugin: NSObject, FlutterPlugin {
 
     if ("launchTelegram" == call.method) {
       let args = call.arguments as! Dictionary<String, String>
-      let phone = args["phone"]
-      let message = args["message"]
+      let domain = args["domain"]
 
-      let urlString = "tg://msg?text=\(message ?? "0")&to=\(phone ?? "0")"
+      let urlString = "tg://resolve?domain=\(domain ?? "0")"
 
       let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
       let URL = NSURL(string: urlStringEncoded!)
@@ -49,7 +48,7 @@ public class SwiftFlutterLaunchPlugin: NSObject, FlutterPlugin {
            result(schemeAvailable(scheme: "whatsapp://send"))
            break
          case "telegram":
-           result(schemeAvailable(scheme: "tg://msg"))
+           result(schemeAvailable(scheme: "tg://resolve"))
            break
          default:
              result(false)
