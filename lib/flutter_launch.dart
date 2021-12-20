@@ -17,6 +17,17 @@ class FlutterLaunch {
     await _channel.invokeMethod('launchWhatsapp', params);
   }
 
+  static Future<void> launchTelegram({
+    required String phone,
+    required String message,
+  }) async {
+    final Map<String, dynamic> params = <String, dynamic>{
+      'phone': phone,
+      'message': message
+    };
+    await _channel.invokeMethod('launchTelegram', params);
+  }
+
   static Future<bool> hasApp({required String name}) async {
     final Map<String, dynamic> params = <String, dynamic>{
       'name': name,

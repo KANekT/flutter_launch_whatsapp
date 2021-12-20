@@ -25,6 +25,21 @@ public class SwiftFlutterLaunchPlugin: NSObject, FlutterPlugin {
       }
     }
 
+    if ("launchTelegram" == call.method) {
+      let args = call.arguments as! Dictionary<String, String>
+      let phone = args["phone"]
+      let message = args["message"]
+
+      let urlString = "tg://msg?text=\(message ?? "0")&to=\(phone ?? "0")"
+
+      let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+      let URL = NSURL(string: urlStringEncoded!)
+
+      if UIApplication.shared.canOpenURL(URL! as URL) {
+        UIApplication.shared.openURL(URL! as URL)
+      }
+    }
+
     if ("hasApp" == call.method) {
       let args = call.arguments as! Dictionary<String, String>
       let name = args["name"]
@@ -32,6 +47,9 @@ public class SwiftFlutterLaunchPlugin: NSObject, FlutterPlugin {
        switch name ?? "0" {
          case "whatsapp":
            result(schemeAvailable(scheme: "whatsapp://send"))
+           break
+         case "telegram":
+           result(schemeAvailable(scheme: "tg://msg"))
            break
          default:
              result(false)

@@ -57,12 +57,32 @@ class FlutterLaunchPlugin: FlutterPlugin, MethodCallHandler {
         }
       }
 
+      if (call.method == "launchTelegram") {
+
+        val phone: String? = call.argument("phone")
+        val message: String? = call.argument("message")
+
+        val url: String = "tg://msg?text=${URLEncoder.encode(message, "UTF-8")}&to=$phone"
+
+        if (appInstalledOrNot("org.telegram.messenger")) {
+          val intent: Intent = Intent(Intent.ACTION_VIEW)
+          intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+          intent.setPackage("org.telegram.messenger")
+          intent.data = Uri.parse(url)
+
+          if (intent.resolveActivity(pm) != null) {
+            context.startActivity(intent)
+          }
+        }
+      }
+
       if (call.method == "hasApp") {
         val app: String? = call.argument("name")
 
         when(app) {
           "whatsapp" -> result.success(appInstalledOrNot("com.whatsapp"))
           "whatsapp.wb4" -> result.success(appInstalledOrNot("com.whatsapp.wb4"))
+          "telegram" -> result.success(appInstalledOrNot("org.telegram.messenger"))
           else -> {
             result.error("App not found", "", null)
           }

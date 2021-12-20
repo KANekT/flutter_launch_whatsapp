@@ -18,7 +18,7 @@ Add the following entry to your Info.plist file, located in <project root>/ios/R
 ````xml
 <key>LSApplicationQueriesSchemes</key>
 <array>
-  <string>whatsapp</string>
+  <string>whatsapp, tg</string>
 </array>
 ````
 
@@ -50,6 +50,10 @@ class _MyAppState extends State<MyApp> {
     await FlutterLaunch.launchWathsApp(phone: "5534992016545", message: "Hello");
   }
 
+  void telegramAppOpen() async {
+    await FlutterLaunch.launchTelegram(phone: "5534992016545", message: "Hello");
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -57,14 +61,25 @@ class _MyAppState extends State<MyApp> {
         appBar: new AppBar(
           title: new Text('Plugin example app'),
         ),
-        body: new Center(
-          child: FlatButton(
-            child: Text("Open WhatsApp"),
-            onPressed: () {
-              whatsAppOpen();
-            },
-          )
-        ),
+        body: Center(
+           child: Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 TextButton(
+                   child: Text("Open WhatsApp"),
+                   onPressed: () {
+                     whatsAppOpen();
+                   },
+                 ),
+                 TextButton(
+                   child: Text("Open Telegram"),
+                   onPressed: () {
+                     telegramAppOpen();
+                   },
+                 )
+               ]
+           )
+       );
       ),
     );
   }
